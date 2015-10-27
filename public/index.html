@@ -1,78 +1,90 @@
 <!doctype html>
 <html ng-app="FileSync">
-  <head>
+<head>
     <title>Socket.IO</title>
     <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.css"/>
     <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap-theme.css"/>
     <link rel="stylesheet" href="/components/highlightjs/styles/github.css"/>
     <link rel="stylesheet" href="css/style.css"/>
-  </head>
+</head>
 
-  <body>
+<body>
     <div class="container" ng-controller="SocialCtrl as social">
-      <div ng-repeat="viewer in social.viewers" class="animate">
-        {{ viewer }}
-      </div>
-    </div>
-    <div class="container" ng-controller="HistoryCtrl as history">
-      <div class="history">
-
-        <div class="row-fluid">
-          <h4 class="col-xs-12">File History {{ history.visibility.states }}</h4>
-          <notify-error></notify-error>
-        </div><!-- /row -->
-
-        <div class="row-fluid">
-          <div ng-repeat="edit in history.edits" class="animate">
-            <div class="line well ng-cloak">
-	      <div class="row">
-
-                <div class="cell col-xs-2">
-                  {{ edit.timestamp | date : format : shortTime }}
-                </div>
-
-                <div class="cell col-xs-9 filename">
-                  {{ edit.filename }}
-                </div>
-
-                <div class="cell col-xs-1 options">
-                  <a href ng-click="history.remove(edit)" class="btn btn-danger" title="">x</a>
-                </div>
-
-	        <div class="col-xs-12">
-                  <div hljs source="edit.content">
-                    <textarea></textarea>
-  	          </div>
-	        </div>
-
-              </div>
-
-            </div><!-- /line -->
-
-          </div>
-          <div class="col-xs-12 alert alert-info"
-            ng-if="history.edits.length === 0"
-            class="animate">
-            ... aucun historique... mais que fait le prof !
-          </div>
+        <div ng-repeat="viewer in social.viewers" class="animate">
+            {{ viewer }}
         </div>
-      </div><!-- / -->
-    </div><!-- /container -->
+    </div>
 
-  <script src="/components/angular/angular.js" type="text/javascript"></script>
-  <script src="/components/angular-animate/angular-animate.js" type="text/javascript"></script>
-  <script src="/components/angular-highlightjs/angular-highlightjs.js" type="text/javascript"></script>
+    <div class="container">
+        <div class="chat">
+            <div class="row-fluid">
+                <h4 class="col-xs-12">Chat</h4>
+            </div>
+            <div class="row-fluid">
+                <section id="zone_chat" style="height: 100px; overflow-y: auto;"></section>
+            </div>
+            <div class="row-fluid">
+                <input type="text" name="message" id="message" placeholder="Votre message..." size="50" autofocus />
+                <input type="submit" id="envoi_message" value="Envoyer"/>
+            </div>
+        </div>
 
-  <script src="/components/highlightjs/highlight.pack.js" type="text/javascript"></script>
-  <script src="/components/moment/moment.js" type="text/javascript"></script>
-  <script src="/components/lodash/lodash.js" type="text/javascript"></script>
-  <script src="/components/visibilityjs/lib/visibility.core.js" type="text/javascript"></script>
-  <script src="/socket.io/socket.io.js" type="text/javascript"></script>
-  <script src="/app/app.js" type="text/javascript"></script>
-  <script src="/app/HistoryCtrl.js" type="text/javascript"></script>
-  <script src="/app/HistoryService.js" type="text/javascript"></script>
-  <script src="/app/SocketIOService.js" type="text/javascript"></script>
-  <script src="/app/SocialCtrl.js" type="text/javascript"></script>
-  <script src="/app/VisibilityService.js" type="text/javascript"></script>
-  </body>
-</html>
+
+        <div class="container" ng-controller="HistoryCtrl as history">
+            <div class="history">
+                <div class="row-fluid">
+                    <h4 class="col-xs-12">File History {{ history.visibility.states }}</h4>
+                    <notify-error></notify-error>
+                </div>
+
+                <div class="row-fluid">
+                    <div ng-repeat="edit in history.edits" class="animate">
+                        <div class="line well ng-cloak">
+                            <div class="row">
+                                <div class="cell col-xs-2">
+                                    {{ edit.timestamp | date : format : shortTime }}
+                                </div>
+
+                                <div class="cell col-xs-9 filename">
+                                    {{ edit.filename }}
+                                </div>
+
+                                <div class="cell col-xs-1 options">
+                                    <a href ng-click="history.remove(edit)" class="btn btn-danger" title="">x</a>
+                                </div>
+
+                                <div class="col-xs-12">
+                                    <div hljs source="edit.content">
+                                        <textarea></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 alert alert-info" ng-if="history.edits.length === 0" class="animate">... aucun historique... mais que fait le prof !</div>
+                </div>
+            </div><!-- / -->
+        </div><!-- /container -->
+        <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="/components/angular/angular.js" type="text/javascript"></script>
+        <script src="/components/angular-animate/angular-animate.js" type="text/javascript"></script>
+        <script src="/components/angular-highlightjs/angular-highlightjs.js" type="text/javascript"></script>
+
+        <script src="/components/highlightjs/highlight.pack.js" type="text/javascript"></script>
+        <script src="/components/moment/moment.js" type="text/javascript"></script>
+        <script src="/components/lodash/lodash.js" type="text/javascript"></script>
+        <script src="/components/visibilityjs/lib/visibility.core.js" type="text/javascript"></script>
+
+        <script src="/socket.io/socket.io.js" type="text/javascript"></script>
+
+        <script src="/app/app.js" type="text/javascript"></script>
+        <script src="/app/HistoryCtrl.js" type="text/javascript"></script>
+        <script src="/app/HistoryService.js" type="text/javascript"></script>
+        <script src="/app/SocketIOService.js" type="text/javascript"></script>
+        <script src="/app/SocialCtrl.js" type="text/javascript"></script>
+        <script src="/app/VisibilityService.js" type="text/javascript"></script>
+        <script src="/app/Chat.js" type="text/javascript"></script>
+        <script src="/app/Notification.js" type="text/javascript"></script>
+    </body>
+    </html>

@@ -1,22 +1,22 @@
 'use strict';
 angular.module('FileSync')
-  .factory('VisibilityService', ['Visibility', 'SocketIOService',
+.factory('VisibilityService', ['Visibility', 'SocketIOService',
     function (Visibility, SocketIOService) {
-      Visibility.change(function (evt, state) {
+        Visibility.change(function (evt, state) {
         // state === 'hidden' || 'visible'
         SocketIOService.userChangedState(state);
-      });
+    });
 
-      SocketIOService.userChangedState('visible');
+        SocketIOService.userChangedState('visible');
 
-      var service = {
-        states: {}
-      };
+        var service = {
+            states: {}
+        };
 
-      SocketIOService.onVisibilityStatesChanged(function (states) {
-        service.states = states;
-      });
+        SocketIOService.onVisibilityStatesChanged(function (states) {
+            service.states = states;
+        });
 
-      return service;
+        return service;
     }
-  ]);
+    ]);
