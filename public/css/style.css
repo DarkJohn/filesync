@@ -57,3 +57,8 @@
     height: 30px;
     opacity: 1;
 }
+
+.content {
+  overflow: hidden;
+  transition: height 200ms;
+}
