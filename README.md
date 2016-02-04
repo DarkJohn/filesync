@@ -1,4 +1,4 @@
-Unidirectional 1-N file syncing with history and *local merging* [![Build Status](https://drone.io/github.com/FGRibreau/filesync/status.png)](https://drone.io/github.com/FGRibreau/filesync/latest)
+Unidirectional 1-N file syncing with history and *local merging*
 ================================================================
 
 This is a **proof of concept** AND **a work in progress**, don't share the word, yet.
@@ -36,6 +36,7 @@ filesync-relay /path/to/directory
 ## [Changelog](/CHANGELOG.md)
 
 ## Contribute / TODO
+- Fix "Click2Expand"
 
 See [issues](https://github.com/FGRibreau/filesync/issues) there is still a lot of things to do/improve note that **I will happily merge any pull-requests that solve each of the specified issues**.
 
